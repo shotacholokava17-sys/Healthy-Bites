@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Healthy Bites — სნექების კატალოგი{% endblock %}
+
+{% block content %}
+<div class="py-16 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Page Title & Header -->
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <span class="text-amberAccent font-bold tracking-widest text-xs uppercase">ჩვენი მენიუ</span>
+            <h2 class="text-3xl sm:text-4xl font-serif text-sage-900 font-medium">ჯანსაღი სნექების კოლექცია</h2>
+            <p class="text-stone-500 text-sm">ყველა ჩვენი სნექი იქმნება 100% ნატურალური, უმაღლესი ხარისხის და ორგანული ინგრედიენტებით.</p>
+            <div class="w-16 h-1 bg-sage-600 mx-auto rounded-full"></div>
+        </div>
+
+        <!-- Products Grid (Dynamic Jinja2 Loop) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for id, prod in products.items() %}
+            <div class="bg-white rounded-3xl border border-cream-200 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
+
+                <!-- Card Header Visual (Aesthetic Background with Emoji/SVG) -->
+                <div class="p-8 bg-cream-100 flex items-center justify-center relative">
+                    <span class="absolute top-4 left-4 bg-white text-xs font-bold text-sage-600 px-3 py-1 rounded-full border border-cream-200 shadow-sm">
+                        {{ prod.calories if prod.calories else "180 კკალ" }}
+                    </span>
+                    <div class="text-7xl py-6 group-hover:scale-110 transition-transform duration-300">
+                        {% if prod.name == 'ENERGY RUSH' %}⚡{% endif %}
+                        {% if prod.name == 'BRAIN FUEL' %}🧠{% endif %}
+                        {% if prod.name == 'RECOVERY BITE' %}💪{% endif %}
+                        {% if prod.name == 'GLOW MIX' %}✨{% endif %}
+                        {% if prod.name == 'CALM BITE' %}🌙{% endif %}
+                        {% if prod.name == 'SWEET WITHOUT GUILT' %}🍫{% endif %}
+                    </div>
+                </div>
+
+                <!-- Product Body Details -->
+                <div class="p-8 flex-grow space-y-4">
+                    <div class="space-y-1">
+                        <span class="text-xs text-amberAccent uppercase tracking-widest font-semibold block">{{ prod.benefit }}</span>
+                        <h3 class="text-2xl font-serif text-sage-900 font-bold tracking-wide">{{ prod.name }}</h3>
+                    </div>
+
+                    <div class="space-y-3 pt-4 border-t border-cream-100 text-sm leading-relaxed">
+                        <div>
+                            <strong class="text-sage-600 font-semibold block text-xs uppercase tracking-wider mb-1">🌿 შემადგენლობა:</strong>
+                            <p class="text-stone-700 font-medium">{{ prod.ingredients }}</p>
+                        </div>
+                        <div>
+                            <strong class="text-sage-600 font-semibold block text-xs uppercase tracking-wider mb-1">🧪 ვიტამინები & ელემენტები:</strong>
+                            <p class="text-stone-600">{{ prod.vitamins }}</p>
+                        </div>
+                        <div>
+                            <strong class="text-sage-600 font-semibold block text-xs uppercase tracking-wider mb-1">🎯 დანიშნულება:</strong>
+                            <p class="text-stone-600">{{ prod.purpose }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer / Order Trigger -->
+                <div class="px-8 pb-8">
+                    <button onclick="triggerOrder('{{ prod.name }}')" class="w-full bg-sage-600 hover:bg-sage-700 text-white py-3.5 rounded-full font-bold transition-all shadow-md shadow-sage-600/10 hover:shadow-lg hover:shadow-sage-600/20">
+                        შეკვეთა 🛒
+                    </button>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+<!-- Simple Toast Notification Script for Basket Simulation -->
+<div id="toast" class="fixed bottom-5 right-5 bg-sage-700 text-white px-6 py-4 rounded-2xl shadow-2xl z-50 transition-all transform translate-y-10 opacity-0 hidden">
+    <!-- Success message inserted dynamically -->
+</div>
+
+<script>
+    function triggerOrder(snackName) {
+        const toast = document.getElementById('toast');
+        toast.innerHTML = `🛒 <strong>${snackName}</strong> წარმატებით დაემატა კალათაში!`;
+        toast.classList.remove('hidden');
+
+        // Show animation
+        setTimeout(() => {
+            toast.classList.remove('translate-y-10', 'opacity-0');
+        }, 50);
+
+        // Hide after 3 seconds
+        setTimeout(() => {
+            toast.classList.add('translate-y-10', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 300);
+        }, 3000);
+    }
+</script>
+{% endblock %}
