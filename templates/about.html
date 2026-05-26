@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Healthy Bites — ჩვენს შესახებ{% endblock %}
+
+{% block content %}
+<div class="py-20 bg-cream-50">
+    <div class="max-w-4xl mx-auto px-6 space-y-20">
+
+        <!-- Brand Story Section -->
+        <div class="text-center space-y-6">
+            <span class="text-amberAccent font-bold tracking-widest text-xs uppercase">ჩვენი ისტორია</span>
+            <h2 class="text-4xl sm:text-5xl font-serif text-sage-900 leading-tight">როგორ დაიბადა Healthy Bites 🌿</h2>
+            <div class="w-16 h-1 bg-sage-600 mx-auto rounded-full"></div>
+            <p class="text-stone-600 leading-relaxed max-w-2xl mx-auto text-base sm:text-lg">
+                Healthy Bites შეიქმნა მარტივი იდეით: ჯანსაღი კვება არ უნდა იყოს მოსაწყენი, რთული ან კომპრომისებით სავსე. ჩვენ გადავწყვიტეთ გაგვეერთიანებინა მეცნიერულად დაბალანსებული მიდგომა, სმარტ პერსონალიზაცია და ბუნებრივი, უგემრიელესი გემოები ყოველდღიური ენერგიისთვის.
+            </p>
+        </div>
+
+        <!-- Vision and Mission Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Mission Card -->
+            <div class="bg-white p-8 rounded-3xl border border-cream-200 shadow-sm hover:shadow-md transition-all duration-300">
+                <div class="w-12 h-12 bg-sage-50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+                    🎯
+                </div>
+                <h3 class="text-2xl font-serif text-sage-900 font-semibold mb-3">ჩვენი მისია</h3>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    დავეხმაროთ ადამიანებს ჯანსაღი ჩვევების მარტივად და სასიამოვნოდ ჩამოყალიბებაში. ჩვენ ვქმნით პერსონალიზებულ კვების პროდუქტებს, რომლებიც იდეალურად ერგება თანამედროვე, აქტიური ადამიანის ცხოვრების რიტმსა და ფიზიკურ მოთხოვნებს.
+                </p>
+            </div>
+
+            <!-- Vision Card -->
+            <div class="bg-white p-8 rounded-3xl border border-cream-200 shadow-sm hover:shadow-md transition-all duration-300">
+                <div class="w-12 h-12 bg-sage-50 rounded-2xl flex items-center justify-center text-3xl mb-6">
+                    ✨
+                </div>
+                <h3 class="text-2xl font-serif text-sage-900 font-semibold mb-3">ჩვენი ხედვა</h3>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    შევქმნათ სრულიად გამჭვირვალე ეკოსისტემა, სადაც მომხმარებელმა ზუსტად იცის, რას იღებს მისი ორგანიზმი. ჩვენ გვჯერა, რომ მომავლის კვება სწორედ ინდივიდუალურ პერსონალიზაციასა და მაღალ ტექნოლოგიურ ხარისხშია.
+                </p>
+            </div>
+        </div>
+
+        <!-- QR Transparency Showcase Section -->
+        <div class="bg-sage-600 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-xl">
+            <!-- Decorative radial pattern -->
+            <div class="absolute inset-0 bg-sage-700 opacity-20 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Text Details -->
+                <div class="lg:col-span-8 space-y-6">
+                    <span class="text-cream-100 font-bold tracking-wider text-xs uppercase">ინოვაცია & ნდობა</span>
+                    <h3 class="text-3xl font-serif font-medium">QR Transparency ტექნოლოგია</h3>
+                    <p class="text-cream-100/90 text-sm sm:text-base leading-relaxed">
+                        თითოეულ შეფუთვაზე დატანილი უნიკალური QR კოდი გაძლევთ წვდომას პროდუქტის ციფრულ პასპორტზე. თქვენ შეგიძლიათ რეალურ დროში იხილოთ, თუ რომელ რეგიონში შეგროვდა ნუში, რომელი ალპური ზონიდანაა თაფლი და გაეცნოთ ლაბორატორიულ დასკვნებს უსაფრთხოების შესახებ. ჩვენ არაფერს ვმალავთ, რადგან ვამაყობთ ჩვენი ხარისხით.
+                    </p>
+                </div>
+
+                <!-- Graphic / Interactive element -->
+                <div class="lg:col-span-4 flex justify-center">
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-center space-y-3 w-full max-w-[200px]">
+                        <span class="text-4xl block">🛡️</span>
+                        <h4 class="font-bold text-sm">სრული კონტროლი</h4>
+                        <p class="text-[10px] text-cream-100/80">ფერმიდან - თქვენს მაგიდამდე</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}Healthy Bites — Smart Wellness Quiz{% endblock %}
+
+{% block content %}
+<div class="py-16 px-4 bg-gradient-to-br from-cream-50 via-white to-cream-100/50 min-h-screen flex items-center justify-center">
+    <div class="max-w-3xl w-full bg-white rounded-[2.5rem] border border-cream-200/70 shadow-2xl shadow-stone-200/60 overflow-hidden backdrop-blur-md">
+
+        <!-- Header -->
+        <div class="bg-sage-600 py-12 px-8 text-center text-white relative overflow-hidden">
+            <!-- ულამაზესი პრემიუმ პატერნი ფონისთვის -->
+            <div class="absolute inset-0 bg-sage-700 opacity-30 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-white/10 rounded-full filter blur-2xl"></div>
+
+            <span class="relative text-xs uppercase tracking-[0.25em] font-bold text-cream-200/90 block mb-2 animate-pulse">Smart Wellness Assistant</span>
+            <h2 class="relative text-3xl sm:text-4xl font-serif tracking-wide font-medium">HEALTHY BITES SMART QUIZ</h2>
+            <p class="relative text-sm text-cream-100/80 max-w-md mx-auto mt-3 font-light leading-relaxed">შეიყვანე შენი მონაცემები და ჩვენი ალგორითმი შეგირჩევს შენზე იდეალურად მორგებულ ენერგიის წყაროს.</p>
+        </div>
+
+        <!-- Quiz Progress Bar -->
+        <div class="w-full bg-cream-100 h-2 relative">
+            <div id="quiz-progress" class="bg-gradient-to-r from-amberAccent to-amber-500 h-full transition-all duration-500 ease-out" style="width: 16.6%"></div>
+        </div>
+
+        <!-- Form -->
+        <form id="quizForm" action="{{ url_for('quiz') }}" method="POST" class="p-8 sm:p-12 space-y-10 bg-white">
+
+            <!-- Step 1: Gender -->
+            <div class="quiz-step transition-all duration-500" data-step="1">
+                <h3 class="text-xl sm:text-2xl font-serif text-sage-900 mb-8 flex items-center gap-4">
+                    <span class="w-9 h-9 rounded-xl bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-extrabold shadow-sm">01</span>
+                    აირჩიე სქესი:
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gender" value="female" class="peer hidden" checked>
+                        <div class="p-8 text-center border-2 border-stone-100 rounded-[2rem] bg-stone-50/40 peer-checked:border-sage-600 peer-checked:bg-sage-50/40 peer-checked:shadow-[0_12px_30px_rgba(74,107,83,0.12)] group-hover:border-sage-200 transition-all duration-300 transform group-hover:-translate-y-1">
+                            <span class="text-5xl block mb-3 filter drop-shadow-sm">👩</span>
+                            <span class="font-bold text-stone-800 tracking-wide block text-lg">ქალი</span>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gender" value="male" class="peer hidden">
+                        <div class="p-8 text-center border-2 border-stone-100 rounded-[2rem] bg-stone-50/40 peer-checked:border-sage-600 peer-checked:bg-sage-50/40 peer-checked:shadow-[0_12px_30px_rgba(74,107,83,0.12)] group-hover:border-sage-200 transition-all duration-300 transform group-hover:-translate-y-1">
+                            <span class="text-5xl block mb-3 filter drop-shadow-sm">👨</span>
+                            <span class="font-bold text-stone-800 tracking-wide block text-lg">კაცი</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 2: Age -->
+            <div class="quiz-step hidden transition-all duration-500" data-step="2">
+                <h3 class="text-xl sm:text-2xl font-serif text-sage-900 mb-8 flex items-center gap-4">
+                    <span class="w-9 h-9 rounded-xl bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-extrabold shadow-sm">02</span>
+                    აირჩიე ასაკობრივი ჯგუფი:
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {% for age_group in ['16–20', '21–30', '31–45', '45+'] %}
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="age" value="{{ age_group }}" class="peer hidden" {% if loop.first %}checked{% endif %}>
+                        <div class="py-6 text-center border-2 border-stone-100 rounded-2xl bg-stone-50/40 peer-checked:border-sage-600 peer-checked:bg-sage-50/40 peer-checked:shadow-lg peer-checked:text-sage-700 transition-all duration-300 font-bold text-stone-800 text-lg group-hover:-translate-y-1">
+                            {{ age_group }}
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Step 3: Weight -->
+            <div class="quiz-step hidden transition-all duration-500" data-step="3">
+                <h3 class="text-xl sm:text-2xl font-serif text-sage-900 mb-8 flex items-center gap-4">
+                    <span class="w-9 h-9 rounded-xl bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-extrabold shadow-sm">03</span>
+                    შეიყვანე წონა (კილოგრამებში):
+                </h3>
+                <div class="max-w-xs mx-auto text-center py-6">
+                    <div class="relative rounded-3xl shadow-sm group">
+                        <input type="number" id="quiz-weight" name="weight" min="30" max="220" value="65" class="block w-full rounded-[2rem] border-2 border-stone-100 bg-stone-50/50 py-5 px-8 text-center text-4xl font-serif font-bold text-sage-900 focus:border-sage-600 focus:bg-white focus:ring-4 focus:ring-sage-600/5 transition-all duration-300" required>
+                        <span class="absolute inset-y-0 right-8 flex items-center text-stone-400 font-bold tracking-wider text-sm">კგ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Activity Level -->
+            <div class="quiz-step hidden transition-all duration-500" data-step="4">
+                <h3 class="text-xl sm:text-2xl font-serif text-sage-900 mb-8 flex items-center gap-4">
+                    <span class="w-9 h-9 rounded-xl bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-extrabold shadow-sm">04</span>
+                    როგორია შენი ფიზიკური აქტივობის დონე?
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {% set activities = [
+                        {'val': 'დაბალი', 'emoji': '🛋️', 'desc': 'მჯდომარე ცხოვრების წესი'},
+                        {'val': 'საშუალო', 'emoji': '🚶', 'desc': 'ზომიერი ვარჯიში ან სიარული'},
+                        {'val': 'მაღალი', 'emoji': '🏃', 'desc': 'აქტიური სპორტი კვირაში 3-5-ჯერ'},
+                        {'val': 'ძალიან აქტიური', 'emoji': '🏋️', 'desc': 'ყოველდღიური მძიმე დატვირთვა'}
+                    ] %}
+                    {% for act in activities %}
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="activity" value="{{ act.val }}" class="peer hidden" {% if loop.first %}checked{% endif %}>
+                        <div class="p-6 border-2 border-stone-100 rounded-[2rem] bg-stone-50/40 peer-checked:border-sage-600 peer-checked:bg-sage-50/40 peer-checked:shadow-xl transition-all duration-300 flex items-center gap-5 group-hover:-translate-y-0.5">
+                            <span class="text-4xl filter drop-shadow-sm">{{ act.emoji }}</span>
+                            <div>
+                                <h4 class="font-bold text-stone-900 text-base tracking-wide">{{ act.val }}</h4>
+                                <p class="text-xs text-stone-500 font-light mt-0.5">{{ act.desc }}</p>
+                            </div>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Step 5: Principal Needs -->
+            <div class="quiz-step hidden transition-all duration-500" data-step="5">
+                <h3 class="text-xl sm:text-2xl font-serif text-sage-900 mb-8 flex items-center gap-4">
+                    <span class="w-9 h-9 rounded-xl bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-extrabold shadow-sm">05</span>
+                    რა გჭირდება ყველაზე მეტად? (მთავარი მიზანი)
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {% set needs = [
+                        {'val': 'energy', 'emoji': '⚡', 'title': 'ენერგია', 'desc': 'სწრაფი და ბუნებრივი მუხტი'},
+                        {'val': 'focus', 'emoji': '🧠', 'title': 'კონცენტრაცია', 'desc': 'გონებრივი მუშაობა და ფოკუსი'},
+                        {'val': 'recovery', 'emoji': '💪', 'title': 'აღდგენა', 'desc': 'კუნთების სწრაფი რეკოვერი ვარჯიშის შემდეგ'},
+                        {'val': 'skin', 'emoji': '✨', 'title': 'კანის მოვლა', 'desc': 'ბზინვარება და უჯრედოვანი კვება'},
+                        {'val': 'calm', 'emoji': '🌙', 'title': 'მშვიდი ძილი', 'desc': 'რელაქსაცია და სტრესის მოხსნა'},
+                        {'val': 'sweet', 'emoji': '🍫', 'title': 'ჯანსაღი ტკბილი', 'desc': 'სინდისის ქენჯნის გარეშე სიტკბო'}
+                    ] %}
+                    {% for need in needs %}
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="need" value="{{ need.val }}" class="peer hidden" {% if loop.first %}checked{% endif %}>
+                        <div class="p-6 border-2 border-stone-100 rounded-[2rem] bg-stone-50/40 peer-checked:border-sage-600 peer-checked:bg-sage-50/40 peer-checked:shadow-xl transition-all duration-300 flex items-center gap-5 group-hover:-translate-y-0.5">
+                            <span class="text-4xl">{{ need.emoji }}</span>
+                            <div>
+                                <h4 class="font-bold text-stone-900 text-base tracking-wide">{{ need.title }}</h4>
+                                <p class="text-xs text-stone-500 font-light mt-0.5">{{ need.desc }}</p>
+                            </div>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Step 6: Deficient Elements -->
+            <div class="quiz-step hidden transition-all duration-500" data-step="6">
+                <h3 class="text-xl sm:text-2xl font-serif text-sage-900 mb-8 flex items-center gap-4">
+                    <span class="w-9 h-9 rounded-xl bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-extrabold shadow-sm">06</span>
+                    რომელი ვიტამინი ან ელემენტი გაკლია ყველაზე მეტად?
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {% set vitals = [
+                        {'val': 'რკინა', 'emoji': '🩸'},
+                        {'val': 'მაგნიუმი', 'emoji': '🔋'},
+                        {'val': 'B12', 'emoji': '🧠'},
+                        {'val': 'ვიტამინი D', 'emoji': '☀️'},
+                        {'val': 'ომეგა-3', 'emoji': '🐟'},
+                        {'val': 'ვიტამინი C', 'emoji': '🍊'}
+                    ] %}
+                    {% for vit in vitals %}
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="vitamin" value="{{ vit.val }}" class="peer hidden" {% if loop.first %}checked{% endif %}>
+                        <div class="py-5 px-4 text-center border-2 border-stone-100 rounded-2xl bg-stone-50/40 peer-checked:border-sage-600 peer-checked:bg-sage-50/40 peer-checked:shadow-lg transition-all duration-300 font-bold text-stone-800 text-sm sm:text-base group-hover:-translate-y-1">
+                            {{ vit.val }} {{ vit.emoji }}
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="flex justify-between pt-8 border-t border-stone-100">
+                <button type="button" id="prev-btn" onclick="nextStep(-1)" class="px-8 py-4 rounded-full border border-stone-200 text-stone-500 hover:bg-stone-50 font-bold text-sm tracking-wide transition-all duration-200 opacity-40 cursor-not-allowed" disabled>
+                    ← უკან
+                </button>
+                <button type="button" id="next-btn" onclick="nextStep(1)" class="px-10 py-4 rounded-full bg-sage-600 hover:bg-sage-700 text-white font-bold text-sm tracking-wide transition-all duration-300 shadow-xl shadow-sage-600/20 hover:shadow-2xl hover:shadow-sage-600/30 hover:-translate-y-0.5">
+                    შემდეგი →
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    function nextStep(direction) {
+        const currentStepEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
+
+        if (direction === 1 && currentStep === 3) {
+            const weightVal = document.getElementById('quiz-weight').value;
+            if (!weightVal || weightVal < 30 || weightVal > 220) {
+                alert('გთხოვთ შეიყვანოთ სწორი წონა (30-დან 220 კგ-მდე)!');
+                return;
+            }
+        }
+
+        const nextStepNum = currentStep + direction;
+        if (nextStepNum < 1 || nextStepNum > totalSteps) return;
+
+        currentStepEl.classList.add('hidden');
+        const nextStepEl = document.querySelector(`.quiz-step[data-step="${nextStepNum}"]`);
+        nextStepEl.classList.remove('hidden');
+
+        currentStep = nextStepNum;
+
+        const progressPercent = (currentStep / totalSteps) * 100;
+        document.getElementById('quiz-progress').style.width = `${progressPercent}%`;
+
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        if (currentStep === 1) {
+            prevBtn.disabled = true;
+            prevBtn.classList.add('opacity-40', 'cursor-not-allowed');
+        } else {
+            prevBtn.disabled = false;
+            prevBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+        }
+
+        if (currentStep === totalSteps) {
+            nextBtn.innerText = 'შედეგის მიღება 🌿';
+            nextBtn.onclick = null;
+            nextBtn.type = 'submit';
+            nextBtn.classList.replace('bg-sage-600', 'bg-amber-600');
+            nextBtn.classList.replace('hover:bg-sage-700', 'hover:bg-amber-700');
+        } else {
+            nextBtn.innerText = 'შემდეგი →';
+            nextBtn.onclick = () => nextStep(1);
+            nextBtn.type = 'button';
+            nextBtn.classList.contains('bg-amber-600') && nextBtn.classList.replace('bg-amber-600', 'bg-sage-600');
+            nextBtn.classList.contains('hover:bg-amber-700') && nextBtn.classList.replace('hover:bg-amber-700', 'hover:bg-sage-700');
+        }
+    }
+</script>
+{% endblock %}

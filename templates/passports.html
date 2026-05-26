@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Healthy Bites — ციფრული პასპორტების რეესტრი{% endblock %}
+
+{% block content %}
+<div class="py-16 px-4 bg-gradient-to-br from-cream-50 via-white to-cream-100/40 min-h-screen">
+    <div class="max-w-5xl mx-auto space-y-10">
+
+        <div class="text-center space-y-3">
+            <span class="text-xs uppercase tracking-widest text-sage-600 font-bold bg-sage-50 px-4 py-1.5 rounded-full border border-sage-100">🛡️ გამჭვირვალობის პლატფორმა</span>
+            <h1 class="text-3xl sm:text-5xl font-serif text-stone-900 font-medium">პროდუქტების ციფრული პასპორტები</h1>
+            <p class="text-stone-500 font-light max-w-xl mx-auto text-sm sm:text-base">აირჩიეთ ნებისმიერი სნექი, რათა იხილოთ მისი ლაბორატორიული ტესტები, ინგრედიენტების წარმოშობა და ხარისხის სერთიფიკატი.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for id, snack in snacks.items() %}
+            <div class="bg-white rounded-[2.5rem] border border-stone-100 shadow-lg shadow-stone-100/50 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+                <div class="space-y-4">
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-mono text-stone-400 bg-stone-50 px-2.5 py-1 rounded-md">{{ snack.batch }}</span>
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2.5 py-1 rounded-full border border-green-100">აქტიური ✓</span>
+                    </div>
+
+                    <div class="w-full h-44 bg-gradient-to-tr from-cream-100/50 to-cream-50 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-cream-200/30 relative shadow-inner">
+                        <img src="{{ url_for('static', filename=snack.name ~ '.jpg') }}"
+                             alt="{{ snack.name }}"
+                             class="max-w-full max-h-full object-contain filter drop-shadow-lg transform group-hover:scale-105 transition-transform duration-500 ease-out">
+                    </div>
+
+                    <h3 class="text-xl font-serif font-bold text-sage-900 group-hover:text-sage-700 transition-colors uppercase pt-2">{{ snack.name }}</h3>
+                    <p class="text-xs text-stone-500 line-clamp-2 font-light leading-relaxed">{{ snack.description }}</p>
+
+                    <div class="pt-2 space-y-1">
+                        <span class="text-[10px] uppercase font-bold text-amber-600 tracking-wider block">მთავარი სარგებელი:</span>
+                        <span class="text-sm text-stone-700 font-medium">{{ snack.benefit }}</span>
+                    </div>
+                </div>
+
+                <div class="pt-6 mt-6 border-t border-stone-50">
+                    <a href="{{ url_for('passport_detail', snack_id=id) }}" class="w-full inline-flex items-center justify-center bg-stone-50 group-hover:bg-sage-600 group-hover:text-white text-stone-700 text-center py-3 rounded-xl font-bold text-xs tracking-wider uppercase transition-all duration-300">
+                        პასპორტის გახსნა 🔍
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

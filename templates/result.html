@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Healthy Bites — შენი პერსონალური სნექი{% endblock %}
+
+{% block content %}
+<div class="py-20 px-4 bg-gradient-to-br from-cream-50 via-white to-cream-100/40 min-h-screen flex items-center justify-center">
+    <div class="max-w-4xl w-full bg-white rounded-[2.5rem] border border-cream-200/70 shadow-2xl shadow-stone-200/50 overflow-hidden p-8 sm:p-14 relative backdrop-blur-md">
+
+        <div class="absolute top-0 right-0 -z-10 w-72 h-72 bg-amber-100/30 rounded-full filter blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -z-10 w-72 h-72 bg-sage-50/40 rounded-full filter blur-3xl"></div>
+
+        <div class="text-center space-y-4 max-w-2xl mx-auto">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-widest bg-amberAccent/10 text-amber-700 uppercase border border-amberAccent/20 animate-pulse">
+                🎯 შენი იდეალური მატჩი
+            </span>
+            <h2 class="text-4xl sm:text-6xl font-serif text-sage-900 tracking-tight font-medium uppercase pt-2">{{ snack.name }}</h2>
+            <p class="text-stone-500 font-light text-base leading-relaxed">შენი ცხოვრების სტილისა და ბიომონაცემების საფუძველზე, ჩვენმა სმარტ-ალგორითმმა შეგირჩია საუკეთესო ფორმულა:</p>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center border-b border-stone-100 pb-16">
+
+            <div class="flex justify-center bg-gradient-to-tr from-cream-100/70 to-cream-50 p-10 rounded-[2rem] relative min-h-[300px] items-center border border-cream-200/40 shadow-inner group">
+                <span class="absolute top-4 left-4 bg-white text-xs font-bold text-sage-700 px-4 py-1.5 rounded-full border border-cream-200/80 shadow-sm z-10 tracking-wide">
+                    100% ნატურალური
+                </span>
+
+                <div class="w-full h-52 flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500 ease-out animate-bounce" style="animation-duration: 4s;">
+                    {% if snack.name == 'ENERGY RUSH' %}
+                        <img src="{{ url_for('static', filename='ENERGY RUSH.jpg') }}" alt="Energy Rush" class="max-w-full max-h-full object-contain filter drop-shadow-xl">
+                    {% endif %}
+
+                    {% if snack.name == 'BRAIN FUEL' %}
+                        <img src="{{ url_for('static', filename='BRAIN FUEL.jpg') }}" alt="Brain Fuel" class="max-w-full max-h-full object-contain filter drop-shadow-xl">
+                    {% endif %}
+
+                    {% if snack.name == 'RECOVERY BITE' %}
+                        <img src="{{ url_for('static', filename='RECOVERY BITE.jpg') }}" alt="Recovery Bite" class="max-w-full max-h-full object-contain filter drop-shadow-xl">
+                    {% endif %}
+
+                    {% if snack.name == 'GLOW MIX' %}
+                        <img src="{{ url_for('static', filename='GLOW MIX.jpg') }}" alt="Glow Mix" class="max-w-full max-h-full object-contain filter drop-shadow-xl">
+                    {% endif %}
+
+                    {% if snack.name == 'CALM BITE' %}
+                        <img src="{{ url_for('static', filename='CALM BITE.jpg') }}" alt="Calm Bite" class="max-w-full max-h-full object-contain filter drop-shadow-xl">
+                    {% endif %}
+
+                    {% if snack.name == 'SWEET WITHOUT GUILT' %}
+                        <img src="{{ url_for('static', filename='SWEET WITHOUT GUILT.jpg') }}" alt="Sweet Without Guilt" class="max-w-full max-h-full object-contain filter drop-shadow-xl">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="relative pl-4 border-l-2 border-amberAccent/40">
+                    <span class="text-xs uppercase tracking-widest text-amber-600 font-extrabold block">🌿 შემადგენლობა</span>
+                    <p class="text-xl text-stone-800 font-medium mt-1.5 font-serif tracking-wide">{{ snack.ingredients }}</p>
+                </div>
+
+                <div class="relative pl-4 border-l-2 border-sage-600/30">
+                    <span class="text-xs uppercase tracking-widest text-sage-700 font-extrabold block">🧪 ძირითადი ვიტამინები</span>
+                    <p class="text-stone-600 font-light mt-1.5 leading-relaxed">
+                        {{ snack.vitamins }}
+                        {% if user_vitamin %}
+                        და დამატებით <span class="text-sage-600 font-bold bg-sage-50 px-2 py-0.5 rounded border border-sage-100">{{ user_vitamin }}</span> (შენი არჩევანით)
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="relative pl-4 border-l-2 border-sage-600/30">
+                    <span class="text-xs uppercase tracking-widest text-sage-700 font-extrabold block">🎯 მთავარი სარგებელი</span>
+                    <p class="text-stone-800 font-bold mt-1.5 text-lg flex items-center gap-2 text-sage-700 font-serif">
+                        <span class="text-amberAccent text-xl">✓</span> {{ snack.benefit }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 bg-gradient-to-r from-cream-100/60 to-cream-50 p-8 rounded-[2rem] text-stone-700 italic border-l-4 border-sage-600 text-center relative overflow-hidden">
+            <span class="absolute top-2 left-4 text-6xl text-sage-200/40 font-serif select-none">“</span>
+            <p class="relative z-10 text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto text-stone-800">
+                თქვენი ცხოვრების სტილისა და ორგანიზმის საჭიროებების მიხედვით, თქვენთვის იდეალური არჩევანია <strong>{{ snack.name }}</strong>. ეს სნექი დაგეხმარებათ ენერგიის, კონცენტრაციისა და ჯანმრთელობის ბუნებრივ მხარდაჭერაში.
+            </p>
+        </div>
+
+        <div class="mt-16 bg-stone-50/50 rounded-[2rem] p-8 border border-stone-100 text-center space-y-5">
+            <div class="flex items-center justify-center gap-2 text-sage-700 font-bold tracking-wider">
+                <span class="text-xl">🔍</span>
+                <h4 class="font-serif text-lg tracking-wide uppercase">QR TRANSPARENCY სისტემა</h4>
+            </div>
+            <p class="text-xs sm:text-sm text-stone-500 max-w-xl mx-auto leading-relaxed font-light">
+                Healthy Bites უზრუნველყოფს სრულ გამჭვირვალობას. დაასკანირე (ან დააკლიკე) ქვემოთ მოცემული QR კოდი, რათა იხილო ამ კონკრეტული სნექის ინგრედიენტების წარმოშობის სერტიფიკატები და ლაბორატორიული ტესტის შედეგები.
+            </p>
+
+            <div onclick="showQRDetails()" class="inline-block p-5 bg-white rounded-3xl shadow-md border border-cream-200/60 cursor-pointer hover:scale-105 hover:shadow-xl transition-all duration-300 group">
+                <div id="qrcode" class="bg-white p-1 rounded-xl"></div>
+                <span class="text-[10px] text-sage-600 block mt-3 font-bold uppercase tracking-widest group-hover:text-amber-600 transition-colors">დააკლიკე სანახავად 🛡️</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-5 mt-16">
+            <a href="{{ url_for('products') }}" class="bg-sage-600 hover:bg-sage-700 text-white text-center px-10 py-5 rounded-full font-bold transition-all shadow-xl shadow-sage-600/20 hover:shadow-sage-700/30 hover:-translate-y-1">
+                შეუკვეთე ახლავე 🛒
+            </a>
+            <a href="{{ url_for('quiz') }}" class="border-2 border-stone-200 hover:bg-stone-50 text-stone-600 text-center px-10 py-5 rounded-full font-bold transition-all hover:-translate-y-1">
+                ტესტის თავიდან გავლა 🔄
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<div id="qr-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-md hidden transition-all duration-300">
+    <div class="bg-white rounded-[2.5rem] max-w-md w-full p-8 space-y-6 shadow-2xl border border-cream-100 relative transform transition-all">
+        <button onclick="closeQRModal()" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700 text-3xl font-light focus:outline-none transition-colors">
+            &times;
+        </button>
+        <div class="text-center space-y-2">
+            <span class="text-4xl block filter drop-shadow-sm">🛡️</span>
+            <h3 class="text-2xl font-serif font-bold text-sage-900 tracking-wide">ციფრული პასპორტი</h3>
+            <p class="text-xs text-stone-400 font-mono uppercase tracking-wider">პარტია: #HB-2026-{{ snack.name[:3] }}</p>
+        </div>
+
+        <div class="border-t border-b border-stone-100 py-5 space-y-4 text-sm font-light">
+            <div class="flex justify-between items-center">
+                <span class="text-stone-500">დამზადების თარიღი:</span>
+                <span class="font-medium text-stone-900 bg-stone-50 px-3 py-1 rounded-full text-xs">დღეს (შეკვეთით)</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-stone-500">შენახვის ვადა:</span>
+                <span class="font-medium text-stone-900">6 თვე</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-stone-500">თაფლის წარმომავლობა:</span>
+                <span class="font-medium text-stone-900">იმერეთი, ქუთაისი</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-stone-500">თხილეულის ხარისხი:</span>
+                <span class="font-medium text-stone-900">გურია, Premium A</span>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-dashed border-stone-100">
+                <span class="text-stone-500 font-medium">ლაბორატორიული ტესტი:</span>
+                <span class="text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full text-xs border border-green-100">გავლილია ✓</span>
+            </div>
+        </div>
+
+        <button onclick="closeQRModal()" class="w-full bg-sage-600 hover:bg-sage-700 text-white py-4 rounded-full font-bold transition-all shadow-lg shadow-sage-600/10">
+            დახურვა
+        </button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        // აგენერირებს დინამიკურ პასპორტის ლინკს სნექის ID-ის მიხედვით (მაგ: /passport/energy-rush)
+        const snackId = "{{ snack.name.lower().replace(' ', '-') }}";
+        const passportUrl = `${window.location.origin}/passport/${snackId}`;
+
+        new QRCode(document.getElementById("qrcode"), {
+            text: passportUrl,
+            width: 112,
+            height: 112,
+            colorDark : "#1c1917",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    });
+
+    // მოდალის გახსნის ფუნქცია (რომელსაც QR კოდის კონტეინერი იძახებს)
+    function showQRDetails() {
+        const modal = document.getElementById('qr-modal');
+        modal.classList.remove('hidden');
+        // მცირე დაყოვნება, რომ ანიმაციამ (opacity/fade) ლამაზად იმუშაოს
+        setTimeout(() => {
+            modal.classList.add('opacity-100');
+        }, 10);
+    }
+
+    // მოდალის ჩაკეტვის ფუნქცია
+    function closeQRModal() {
+        const modal = document.getElementById('qr-modal');
+        modal.classList.add('hidden');
+    }
+</script>
+{% endblock %}
